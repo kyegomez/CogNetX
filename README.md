@@ -102,6 +102,12 @@ To test CogNetX with some example data, run:
 python example.py
 ```
 
+### Train the model
+
+```bash
+python3 train.py
+```
+
 ## Code Structure
 
 - `cognetx/`: Contains the core neural network classes.
