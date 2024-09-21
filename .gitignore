@@ -12,6 +12,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
+model_checkpoints
 dist/
 downloads/
 eggs/
