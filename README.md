@@ -1,67 +1,121 @@
 [![Multi-Modality](agorabanner.png)](https://discord.com/servers/agora-999382051935506503)
 
-# Python Package Template
+# CogNetX
 
 [![Join our Discord](https://img.shields.io/badge/Discord-Join%20our%20server-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/agora-999382051935506503) [![Subscribe on YouTube](https://img.shields.io/badge/YouTube-Subscribe-red?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@kyegomez3242) [![Connect on LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kye-g-38759a207/) [![Follow on X.com](https://img.shields.io/badge/X.com-Follow-1DA1F2?style=for-the-badge&logo=x&logoColor=white)](https://x.com/kyegomezb)
 
-A easy, reliable, fluid template for python packages complete with docs, testing suites, readme's, github workflows, linting and much much more
 
+
+CogNetX is an advanced, multimodal neural network architecture inspired by human cognition. It integrates speech, vision, and video processing into one unified framework. Built with PyTorch, CogNetX leverages cutting-edge neural networks such as Transformers, Conformers, and CNNs to handle complex multimodal tasks. The architecture is designed to process inputs like speech, images, and video, and output coherent, human-like text.
+
+## Key Features
+- **Speech Processing**: Uses a Conformer network to handle speech inputs with extreme efficiency and accuracy.
+- **Vision Processing**: Employs a ResNet-based Convolutional Neural Network (CNN) for robust image understanding.
+- **Video Processing**: Utilizes a 3D CNN architecture for real-time video analysis and feature extraction.
+- **Text Generation**: Integrates a Transformer model to process and generate human-readable text, combining the features from speech, vision, and video.
+- **Multimodal Fusion**: Combines multiple input streams into a unified architecture, mimicking how humans process various types of sensory information.
+
+## Architecture Overview
+
+CogNetX brings together several cutting-edge neural networks:
+- **Conformer** for high-quality speech recognition.
+- **Transformer** for text generation and processing.
+- **ResNet** for vision and image recognition tasks.
+- **3D CNN** for video stream processing.
+
+The architecture is designed to be highly modular, allowing easy extension and integration of additional modalities.
+
+### Neural Networks Used
+- **Speech**: [Conformer](https://arxiv.org/abs/2005.08100)
+- **Vision**: [ResNet50](https://arxiv.org/abs/1512.03385)
+- **Video**: [3D CNN (R3D-18)](https://arxiv.org/abs/1711.11248)
+- **Text**: [Transformer](https://arxiv.org/abs/1706.03762)
 
 ## Installation
 
-You can install the package using pip
+To set up and use CogNetX, first clone the repository:
 
 ```bash
-pip install -e .
+git clone https://github.com/your-username/CogNetX.git
+cd CogNetX
 ```
 
-# Usage
+Next, install the required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Requirements
+- Python 3.8+
+- PyTorch 1.10+
+- Torchvision
+- Torchaudio
+
+Install the required packages with:
+
+```bash
+pip install torch torchvision torchaudio
+```
+
+## Usage
+
+### Model Architecture
+
 ```python
-print("hello world")
+import torch
+from cognetx import CogninexusNet
 
+model = CogninexusNet()
+speech_data = torch.rand(1, 80, 100)  # Example speech input
+vision_data = torch.rand(1, 3, 224, 224)  # Example vision input
+video_data = torch.rand(1, 3, 16, 112, 112)  # Example video input
+text_data = torch.rand(10, 32, 512)  # Example text input
+
+output = model(speech_data, vision_data, video_data, text_data)
+print(output)
 ```
 
+### Example Pipeline
 
+1. **Speech Input**: Provide raw speech data or features extracted via an MFCC filter.
+2. **Vision Input**: Use images or frame snapshots from video.
+3. **Video Input**: Feed the network with video sequences.
+4. **Text Output**: The model will generate a text output based on the combined multimodal input.
 
-### Code Quality 🧹
+### Running the Example
 
-- `make style` to format the code
-- `make check_code_quality` to check code quality (PEP8 basically)
-- `black .`
-- `ruff . --fix`
+To test CogNetX with some example data, run:
 
-### Tests 🧪
-
-[`pytests`](https://docs.pytest.org/en/7.1.x/) is used to run our tests.
-
-### Publish on PyPi 🚀
-
-**Important**: Before publishing, edit `__version__` in [src/__init__](/src/__init__.py) to match the wanted new version.
-
-```
-poetry build
-poetry publish
+```bash
+python example.py
 ```
 
-### CI/CD 🤖
+## Code Structure
 
-We use [GitHub actions](https://github.com/features/actions) to automatically run tests and check code quality when a new PR is done on `main`.
+- `cognetx/`: Contains the core neural network classes.
+    - `speech.py`: Conformer-based speech recognition model.
+    - `vision.py`: ResNet-based vision processing model.
+    - `video.py`: 3D CNN for video stream processing.
+    - `text.py`: Transformer for text generation.
+    - `cogninexus.py`: Main module that integrates all the networks into one architecture.
+- `example.py`: Example script to test the architecture with dummy data.
 
-On any pull request, we will check the code quality and tests.
+## Future Work
+- Add support for additional modalities such as EEG signals or tactile data.
+- Optimize the model for real-time performance across edge devices.
+- Implement transfer learning and fine-tuning on various datasets.
 
-When a new release is created, we will try to push the new code to PyPi. We use [`twine`](https://twine.readthedocs.io/en/stable/) to make our life easier. 
+## Contributing
+Contributions are welcome! Please submit a pull request or open an issue if you want to suggest an improvement.
 
-The **correct steps** to create a new realease are the following:
-- edit `__version__` in [src/__init__](/src/__init__.py) to match the wanted new version.
-- create a new [`tag`](https://git-scm.com/docs/git-tag) with the release name, e.g. `git tag v0.0.1 && git push origin v0.0.1` or from the GitHub UI.
-- create a new release from GitHub UI
+### Steps to Contribute
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/awesome-feature`)
+3. Commit your changes (`git commit -am 'Add awesome feature'`)
+4. Push to the branch (`git push origin feature/awesome-feature`)
+5. Open a pull request
 
-The CI will run when you create the new release.
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-# Docs
-We use MK docs. This repo comes with the zeta docs. All the docs configurations are already here along with the readthedocs configs.
-
-
-
-# License
-MIT
