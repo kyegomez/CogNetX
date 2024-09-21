@@ -33,47 +33,58 @@ The architecture is designed to be highly modular, allowing easy extension and i
 
 ## Installation
 
-To set up and use CogNetX, first clone the repository:
 
 ```bash
-git clone https://github.com/your-username/CogNetX.git
-cd CogNetX
+
+$ pip3 install -U cognetx
+
 ```
-
-Next, install the required dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-### Requirements
-- Python 3.8+
-- PyTorch 1.10+
-- Torchvision
-- Torchaudio
-
-Install the required packages with:
-
-```bash
-pip install torch torchvision torchaudio
-```
-
-## Usage
 
 ### Model Architecture
 
 ```python
 import torch
-from cognetx import CogninexusNet
+from cognetx.model import CogNetX
 
-model = CogninexusNet()
-speech_data = torch.rand(1, 80, 100)  # Example speech input
-vision_data = torch.rand(1, 3, 224, 224)  # Example vision input
-video_data = torch.rand(1, 3, 16, 112, 112)  # Example video input
-text_data = torch.rand(10, 32, 512)  # Example text input
+if __name__ == "__main__":
+    # Example configuration and usage
+    config = {
+        "speech_input_dim": 80,  # For example, 80 Mel-filterbank features
+        "speech_num_layers": 4,
+        "speech_num_heads": 8,
+        "encoder_dim": 256,
+        "decoder_dim": 512,
+        "vocab_size": 10000,
+        "embedding_dim": 512,
+        "decoder_num_layers": 6,
+        "decoder_num_heads": 8,
+        "dropout": 0.1,
+        "depthwise_conv_kernel_size": 31,
+    }
 
-output = model(speech_data, vision_data, video_data, text_data)
-print(output)
+    model = CogNetX(config)
+
+    # Dummy inputs
+    batch_size = 2
+    speech_input = torch.randn(
+        batch_size, 500, config["speech_input_dim"]
+    )  # (batch_size, time_steps, feature_dim)
+    vision_input = torch.randn(
+        batch_size, 3, 224, 224
+    )  # (batch_size, 3, H, W)
+    video_input = torch.randn(
+        batch_size, 3, 16, 112, 112
+    )  # (batch_size, 3, time_steps, H, W)
+    tgt_input = torch.randint(
+        0, config["vocab_size"], (20, batch_size)
+    )  # (tgt_seq_len, batch_size)
+
+    # Forward pass
+    output = model(speech_input, vision_input, video_input, tgt_input)
+    print(
+        output.shape
+    )  # Expected: (tgt_seq_len, batch_size, vocab_size)
+
 ```
 
 ### Example Pipeline
@@ -94,11 +105,7 @@ python example.py
 ## Code Structure
 
 - `cognetx/`: Contains the core neural network classes.
-    - `speech.py`: Conformer-based speech recognition model.
-    - `vision.py`: ResNet-based vision processing model.
-    - `video.py`: 3D CNN for video stream processing.
-    - `text.py`: Transformer for text generation.
-    - `cogninexus.py`: Main module that integrates all the networks into one architecture.
+    - `model`: The entire model model architecture.
 - `example.py`: Example script to test the architecture with dummy data.
 
 ## Future Work
@@ -118,4 +125,3 @@ Contributions are welcome! Please submit a pull request or open an issue if you 
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
